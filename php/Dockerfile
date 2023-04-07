@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:8.1-apache
 
 RUN apt-get update &&\
     apt-get install --no-install-recommends --assume-yes --quiet ca-certificates curl git &&\
@@ -25,11 +25,7 @@ RUN a2enmod rewrite; a2enmod headers; a2enmod ssl
 RUN ln -sf /dev/stdout /var/log/apache2/access.log \
     && ln -sf /dev/stderr /var/log/apache2/error.log
 
-RUN pecl install xdebug-2.9.8 && docker-php-ext-enable xdebug
-RUN echo 'zend_extension="/usr/local/lib/php/extensions/no-debug-non-zts-20190902/xdebug.so"' >> /usr/local/etc/php/php.ini
-RUN echo 'xdebug.remote_port=9000' >> /usr/local/etc/php/php.ini
-RUN echo 'xdebug.remote_enable=1' >> /usr/local/etc/php/php.ini
-RUN echo 'xdebug.remote_connect_back=1' >> /usr/local/etc/php/php.ini
+RUN pecl install xdebug-3.1.2 && docker-php-ext-enable xdebug
 RUN echo 'upload_max_filesize = 20M' >> /usr/local/etc/php/php.ini
 RUN echo 'post_max_size = 21M' >> /usr/local/etc/php/php.ini
 
